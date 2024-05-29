@@ -37,9 +37,9 @@ I have never written an API wrapper before and this is my first project using Ru
   - [ ] Ability Map
      
 - [ ] Map Module
-  - [ ] Map Locations
+  - [x] Map Locations
   - [ ] Player Location
-  - [ ] Quests Count
+  - [x] Quests Count
      
 - [ ] Search Module
   - [ ] Global Search

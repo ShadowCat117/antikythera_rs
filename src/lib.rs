@@ -1,10 +1,13 @@
 mod player;
 mod guild;
+mod map;
 
 use serde_json::Value;
 pub use player::*;
 pub use guild::*;
+pub use map::*;
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Location {
     x: i32,
