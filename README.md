@@ -30,7 +30,7 @@ I have never written an API wrapper before and this is my first project using Ru
      
 - [ ] Leaderboard Module
   - [ ] Get Leaderboard
-  - [ ] Leaderboard Types
+  - [x] Leaderboard Types
      
 - [ ] Ability Module
   - [ ] Ability Tree
