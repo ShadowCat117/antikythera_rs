@@ -48,5 +48,5 @@ I have never written an API wrapper before and this is my first project using Ru
   - [ ] Class List
   - [ ] Class Info
      
-- [ ] News Module
-  - [ ] Latest News
+- [x] News Module
+  - [x] Latest News
