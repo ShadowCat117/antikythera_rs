@@ -3,7 +3,7 @@
 A WIP wrapper for the Wynncraft API using Rust.
 ## Notice
 
-I have never written an API wrapper before and this is my first project using Rust so do not expect anything to be perfect or permenant. I hope to implement everything the v3 API has to offer but make no promises
+I have never written an API wrapper before and this is my first project using Rust so do not expect anything to be perfect or permanent. I hope to implement everything the v3 API has to offer but make no promises
 
 ## Progress
 - [ ] Player Module
@@ -44,9 +44,9 @@ I have never written an API wrapper before and this is my first project using Ru
 - [ ] Search Module
   - [ ] Global Search
      
-- [ ] Classes Module
-  - [ ] Class List
-  - [ ] Class Info
+- [x] Classes Module
+  - [x] Class List
+  - [x] Class Info
      
 - [x] News Module
   - [x] Latest News

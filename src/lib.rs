@@ -2,13 +2,16 @@ mod player;
 mod guild;
 mod map;
 mod leaderboard;
+mod classes;
 mod news;
+
 
 use serde_json::Value;
 pub use player::*;
 pub use guild::*;
 pub use map::*;
 pub use leaderboard::*;
+pub use classes::*;
 pub use news::*;
 
 #[allow(dead_code)]
