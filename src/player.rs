@@ -10,7 +10,7 @@ pub struct OnlinePlayerData {
     pub players_by_world: HashMap<String, Vec<String>>,
 }
 
-async fn fetch_players(world: &str, uuid: bool) -> Result<Vec<String>> {
+async fn fetch_online_players(world: &str, uuid: bool) -> Result<Vec<String>> {
     let identifier = if uuid { "uuid" } else { "username" };
     let world_query = if !world.is_empty() { format!("&server={}", world) } else { String::new() };
     let url = format!("https://api.wynncraft.com/v3/player?identifier={}{world_query}", identifier);
@@ -29,12 +29,12 @@ async fn fetch_players(world: &str, uuid: bool) -> Result<Vec<String>> {
 }
 
 pub async fn get_online_players(uuid: bool) -> Result<Vec<String>> {
-    fetch_players("", uuid).await
+    fetch_online_players("", uuid).await
 }
 
 pub async fn get_online_players_on_world(world: i32, uuid: bool) -> Result<Vec<String>> {
     let world_str = format!("WC{}", world);
-    fetch_players(&world_str, uuid).await
+    fetch_online_players(&world_str, uuid).await
 }
 
 async fn fetch_player_count(world: &str) -> Result<i32> {
