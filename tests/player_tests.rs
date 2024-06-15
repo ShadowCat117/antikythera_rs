@@ -3,6 +3,48 @@ mod tests {
     use antikythera_rs::*;
 
     #[tokio::test]
+    async fn test_get_player_main_stats_username() {
+        match get_player_main_stats("ShadowCat117").await {
+            Ok(player_stats) => {
+                println!("ShadowCat117 Main Stats: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+
+        match get_player_main_stats("ShadowCat118").await {
+            Ok(player_stats) => {
+                println!("ShadowCat118 Main Stats: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+
+        match get_player_main_stats("HeyZeer0").await {
+            Ok(player_stats) => {
+                println!("HeyZeer0 Main Stats: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn test_get_player_main_stats_uuid() {
+        match get_player_main_stats("f2ff1cdd-e18f-4626-b106-3348e47d768d").await {
+            Ok(player_stats) => {
+                println!("ShadowCat117 Main Stats: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+    }
+
+    #[tokio::test]
     async fn test_get_online_players_username() {
         match get_online_players(false).await {
             Ok(player_list) => {
