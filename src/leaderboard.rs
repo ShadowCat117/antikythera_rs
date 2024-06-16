@@ -75,11 +75,18 @@ pub struct Leaderboard {
 pub async fn get_leaderboard_types() -> anyhow::Result<Vec<String>> {
     let url = "https://api.wynncraft.com/v3/leaderboards/types";
 
-    let response = reqwest::get(url).await.context("Failed to make the API request")?;
+    let response = reqwest::get(url)
+        .await
+        .context("Failed to make the API request")?;
 
-    let data: Value = response.json().await.context("Failed to parse the JSON response")?;
+    let data: Value = response
+        .json()
+        .await
+        .context("Failed to parse the JSON response")?;
 
-    let lb_types_array = data.as_array().expect("Expected marker data to be a JSON array");
+    let lb_types_array = data
+        .as_array()
+        .expect("Expected marker data to be a JSON array");
 
     let mut lb_types = Vec::new();
     for lb_type_value in lb_types_array {

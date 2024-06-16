@@ -1,25 +1,24 @@
-mod player;
-mod guild;
-mod map;
-mod leaderboard;
 mod classes;
+mod guild;
+mod leaderboard;
+mod map;
 mod news;
+mod player;
 
-
-use serde_json::Value;
-pub use player::*;
-pub use guild::*;
-pub use map::*;
-pub use leaderboard::*;
 pub use classes::*;
+pub use guild::*;
+pub use leaderboard::*;
+pub use map::*;
 pub use news::*;
+pub use player::*;
+use serde_json::Value;
 
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct Location {
     x: i32,
     y: Option<i32>,
-    z: i32
+    z: i32,
 }
 
 fn json_to_location(value: &Value) -> Location {
