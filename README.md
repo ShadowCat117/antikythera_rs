@@ -8,7 +8,7 @@ I have never written an API wrapper before and this is my first project using Ru
 ## Progress
 - [ ] Player Module
   - [x] Player Main Stats
-  - [ ] Player Full Stats
+  - [x] Player Full Stats
   - [ ] Player Character List
   - [ ] Player Character Ability Map
   - [x] Online Player List
