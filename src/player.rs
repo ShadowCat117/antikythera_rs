@@ -415,15 +415,22 @@ async fn fetch_character_data(data: &Value) -> Result<HashMap<String, CharacterD
 
         let skill_points = character_details["skillPoints"]
             .as_object()
-            .map(|obj| SkillPointData {
-                strength: obj.get("strength").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
-                dexterity: obj.get("dexterity").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
-                intelligence: obj
-                    .get("intelligence")
-                    .and_then(|v| v.as_i64())
-                    .unwrap_or(0) as i32,
-                defense: obj.get("defense").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
-                agility: obj.get("agility").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
+            .and_then(|obj| {
+                if obj.is_empty() {
+                    None
+                } else {
+                    Some(SkillPointData {
+                        strength: obj.get("strength").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
+                        dexterity: obj.get("dexterity").and_then(|v| v.as_i64()).unwrap_or(0)
+                            as i32,
+                        intelligence: obj
+                            .get("intelligence")
+                            .and_then(|v| v.as_i64())
+                            .unwrap_or(0) as i32,
+                        defense: obj.get("defense").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
+                        agility: obj.get("agility").and_then(|v| v.as_i64()).unwrap_or(0) as i32,
+                    })
+                }
             });
 
         let professions_obj = character_details["professions"]
