@@ -69,6 +69,39 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn test_get_player_characters_username() {
+        match get_player_characters("ShadowCat117").await {
+            Ok(player_stats) => {
+                println!("ShadowCat117 Characters: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+
+        match get_player_characters("linnyflower").await {
+            Ok(player_stats) => {
+                println!("linnyflower Characters: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+    }
+
+    #[tokio::test]
+    async fn test_get_player_characters_uuid() {
+        match get_player_characters("f2ff1cdd-e18f-4626-b106-3348e47d768d").await {
+            Ok(player_stats) => {
+                println!("ShadowCat117 Characters: {:?}", player_stats);
+            }
+            Err(e) => {
+                println!("Error: {:?}", e);
+            }
+        }
+    }
+
+    #[tokio::test]
     async fn test_get_online_players_username() {
         match get_online_players(false).await {
             Ok(player_list) => {

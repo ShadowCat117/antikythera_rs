@@ -9,7 +9,7 @@ I have never written an API wrapper before and this is my first project using Ru
 - [ ] Player Module
   - [x] Player Main Stats
   - [x] Player Full Stats
-  - [ ] Player Character List
+  - [x] Player Character List
   - [ ] Player Character Ability Map
   - [x] Online Player List
   - [ ] Multi selector

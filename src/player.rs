@@ -122,6 +122,23 @@ pub struct ProfessionData {
 }
 
 #[derive(Debug)]
+pub struct SimpleCharacterData {
+    pub class: String,
+    pub nickname: Option<String>,
+    pub level: i32,
+    pub xp: i64,
+    pub xp_percent: i32,
+    pub total_level: i32,
+    pub gamemodes: Vec<String>,
+    pub meta: Option<CharacterMetaData>,
+}
+
+#[derive(Debug)]
+pub struct CharacterMetaData {
+    pub died: bool,
+}
+
+#[derive(Debug)]
 pub struct OnlinePlayerData {
     pub total_online: i32,
     pub players_by_world: HashMap<String, Vec<String>>,
@@ -532,6 +549,101 @@ pub async fn get_player_full_stats(identifier: &str) -> Result<FullPlayerData> {
         main_data: fetch_player_main_stats(&data).await?,
         characters: fetch_character_data(&data).await?,
     })
+}
+
+pub async fn get_player_characters(
+    identifier: &str,
+) -> Result<HashMap<String, SimpleCharacterData>> {
+    let url = format!(
+        "https://api.wynncraft.com/v3/player/{}/characters",
+        identifier
+    );
+
+    let response = reqwest::get(&url)
+        .await
+        .context("Failed to make the API request")?;
+
+    let data: Value = response
+        .json()
+        .await
+        .context("Failed to parse the JSON response")?;
+
+    let characters_object = data
+        .as_object()
+        .ok_or_else(|| anyhow::Error::msg("Expected the JSON to be an object"))?;
+
+    let mut characters: HashMap<String, SimpleCharacterData> = HashMap::new();
+
+    for (character, character_details) in characters_object {
+        let class = character_details["type"]
+            .as_str()
+            .ok_or_else(|| anyhow::Error::msg("Expected 'type' to be a String"))?
+            .parse::<String>()
+            .unwrap();
+
+        let nickname = character_details["nickname"]
+            .as_str()
+            .map(|s| s.to_string());
+
+        let level = character_details["level"]
+            .as_i64()
+            .ok_or_else(|| anyhow::Error::msg("Expected 'level' to be an integer"))?
+            as i32;
+
+        let xp = character_details["xp"]
+            .as_i64()
+            .ok_or_else(|| anyhow::Error::msg("Expected 'xp' to be an integer"))?;
+
+        let xp_percent = character_details["xpPercent"]
+            .as_i64()
+            .ok_or_else(|| anyhow::Error::msg("Expected 'xpPercent' to be an integer"))?
+            as i32;
+
+        let total_level = character_details["totalLevel"]
+            .as_i64()
+            .ok_or_else(|| anyhow::Error::msg("Expected 'totalLevel' to be an integer"))?
+            as i32;
+
+        let gamemode_array = character_details["gamemode"]
+            .as_array()
+            .expect("Expected gamemode data to be a JSON array");
+
+        let gamemodes: Vec<String> = gamemode_array
+            .iter()
+            .map(|gamemode_value| {
+                gamemode_value
+                    .as_str()
+                    .expect("Expected gamemode value to be a string")
+                    .to_string()
+            })
+            .collect();
+
+        let meta = character_details["meta"].as_object().and_then(|obj| {
+            if obj.is_empty() {
+                None
+            } else {
+                Some(CharacterMetaData {
+                    died: obj.get("died").unwrap().as_bool().unwrap(),
+                })
+            }
+        });
+
+        characters.insert(
+            character.to_string(),
+            SimpleCharacterData {
+                class,
+                nickname,
+                level,
+                xp,
+                xp_percent,
+                total_level,
+                gamemodes,
+                meta,
+            },
+        );
+    }
+
+    Ok(characters)
 }
 
 async fn fetch_online_players(world: &str, uuid: bool) -> Result<Vec<String>> {
